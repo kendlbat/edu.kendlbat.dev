@@ -246,6 +246,7 @@ console.log("https://github.com/kendlbat");
 var currentSortedBy = "name";
 var people = [];
 var updateID = -1;
+var cdialogActive = false;
 
 class Sorting {
     static byName(reverse) {
@@ -437,18 +438,27 @@ function confirmationDialog(heading, text, yes_callback) {
     document.getElementById("confirmationdialog-yes").onclick = () => {
         dialog.style.display = "none";
         yes_callback();
+        cdialogActive = false;
     }
     document.getElementById("confirmationdialog-no").onclick = () => {
         dialog.style.display = "none";
+        cdialogActive = false;
     };
-    dialog.addEventListener("keyup", (event) => {
-        if (event.key == "Escape") {
-            dialog.style.display = "none";
-        } else if (event.key == "Enter") {
-            yes_callback();
+    document.addEventListener("keyup", (event) => {
+        if (cdialogActive) {
+            console.log(event)
+            if (event.key == "Escape") {
+                dialog.style.display = "none";
+                cdialogActive = false;
+            } else if (event.key == "Enter") {
+                yes_callback();
+                dialog.style.display = "none";
+                cdialogActive = false;
+            }
         }
     });
     dialog.style.display = "block";
+    cdialogActive = true;
     dialog.focus();
 }
 
