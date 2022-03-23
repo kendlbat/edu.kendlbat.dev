@@ -439,24 +439,29 @@ function confirmationDialog(heading, text, yes_callback) {
         dialog.style.display = "none";
         yes_callback();
         cdialogActive = false;
+        document.removeEventListener("keyup", eventKeyupFunction);
     }
     document.getElementById("confirmationdialog-no").onclick = () => {
         dialog.style.display = "none";
         cdialogActive = false;
+        document.removeEventListener("keyup", eventKeyupFunction);
     };
-    document.addEventListener("keyup", (event) => {
+    let eventKeyupFunction = (event) => {
         if (cdialogActive) {
             console.log(event)
             if (event.key == "Escape") {
                 dialog.style.display = "none";
                 cdialogActive = false;
+                document.removeEventListener("keyup", eventKeyupFunction);
             } else if (event.key == "Enter") {
                 yes_callback();
                 dialog.style.display = "none";
                 cdialogActive = false;
+                document.removeEventListener("keyup", eventKeyupFunction);
             }
         }
-    });
+    }
+    document.addEventListener("keyup", eventKeyupFunction);
     dialog.style.display = "block";
     document.getElementById("uac-sound-player").play();
     cdialogActive = true;
