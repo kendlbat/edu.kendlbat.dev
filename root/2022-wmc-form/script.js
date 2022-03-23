@@ -458,6 +458,7 @@ function confirmationDialog(heading, text, yes_callback) {
         }
     });
     dialog.style.display = "block";
+    document.getElementById("uac-sound-player").play();
     cdialogActive = true;
     dialog.focus();
 }
