@@ -47,7 +47,7 @@ body {
     /*animate using background-animation*/
     
     background-size: 400% 400%;
-    animation: background-animation 12s ease infinite;
+    animation: background-animation 18s ease infinite;
 }
 
 #dataform > p {
