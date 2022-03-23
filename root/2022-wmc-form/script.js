@@ -60,7 +60,6 @@ class Person {
         this.grade = formdata.get("class") + ((formdata.get("isclasssuffix") == "on") ? (formdata.get("classsuffix")) : (""));
         this.birthdate = new Date(formdata.get("birthdate"));
         this.lastEdited = new Date();
-        this.id = this.creationDate.getTime();
     }
 
     getName() {
