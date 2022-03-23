@@ -728,11 +728,14 @@ function addSortingListeners() {
     
     document.getElementById("tablehead-hobbies").addEventListener("click", (e) => {
         e.preventDefault();
-        sortData("hobbies", true);    // Trigger file input
+        sortData("hobbies", true);
+    });
+    
+    document.getElementById("tablehead-grade").addEventListener("click", (e) => {
         e.preventDefault();
         sortData("grade", true);
     });
-    
+
     document.getElementById("tablehead-creationDate").addEventListener("click", (e) => {
         e.preventDefault();
         sortData("creationDate", true);
