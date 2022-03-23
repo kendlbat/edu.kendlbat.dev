@@ -6,6 +6,10 @@
 // https://github.com/kendlbat
 // 2BHIF-2022
 
+const possibleHobbies = ["sport", "reading", "cooking", "programming"];
+var compactHobbies = false;
+const cssTableMaxWidth = 1480;
+
 class Address {
     constructor(city, zip) {
         this.city = city;
@@ -193,11 +197,26 @@ class Person {
         td.innerText = this.getEmail();
         tableRow.appendChild(td);
         td = document.createElement("td");
-        td.innerText = this.getBirthdate().toLocaleString();
+        let birthdate = this.getBirthdate();
+        td.innerText = (birthdate.getDate() < 10 ? "0" : "") + birthdate.getDate() + "." + (birthdate.getMonth() < 9 ? "0" : "") + (birthdate.getMonth() + 1) + "." + birthdate.getFullYear();
         tableRow.appendChild(td);
-        td = document.createElement("td");
-        td.innerText = this.getHobbies().length == 0 ? "-" : this.getHobbies().join(", ");
-        tableRow.appendChild(td);
+
+        if (compactHobbies) {
+            td = document.createElement("td");
+            td.innerText = this.getHobbies().join(", ");
+            tableRow.appendChild(td);
+        } else {
+            for (let hobby of possibleHobbies) {
+                td = document.createElement("td");
+                if (this.getHobbies().includes(hobby)) {
+                    td.innerText = "X";
+                } else {
+                    td.innerText = " ";
+                }
+                tableRow.appendChild(td);
+            }
+        }
+
         td = document.createElement("td");
         td.innerText = this.getGrade();
         tableRow.appendChild(td);
@@ -297,6 +316,22 @@ class Sorting {
         });
     }
 
+    static byHobby(hobby, reverse) {
+        people.sort((a, b) => {
+            let at = a.getHobbies().includes(hobby);
+            let bt = b.getHobbies().includes(hobby);
+            let res = -1;
+
+            if (at == bt) {
+                res = 0;
+            } else if (at && (!bt)) {
+                res = 1;
+            }
+
+            return res * (reverse ? 1 : -1);
+        });
+    }
+
     static byGrade(reverse) {
         people.sort((a, b) => {
             return a.getGrade().localeCompare(b.getGrade()) * (reverse ? -1 : 1);
@@ -381,6 +416,11 @@ function sortData(sortBy, byclick) {
         case "lastEdited":
             Sorting.byLastEdited(reverse);
             break;
+        default:
+            if (possibleHobbies.includes(sortBy)) {
+                Sorting.byHobby(sortBy, reverse);
+            }
+            break;
     }
 
     reloadHTMLTable();
@@ -448,7 +488,6 @@ function confirmationDialog(heading, text, yes_callback) {
     };
     let eventKeyupFunction = (event) => {
         if (cdialogActive) {
-            console.log(event)
             if (event.key == "Escape") {
                 dialog.style.display = "none";
                 cdialogActive = false;
@@ -474,6 +513,45 @@ function checkTableEmpty() {
         document.getElementById("tablecontainer").style.display = "none";
     } else {
         document.getElementById("tablecontainer").style.display = "block";
+    }
+}
+
+function convertPercentsToPixels(percents) {
+    return Math.round(percents * window.innerWidth / 100);
+}
+
+function mergeHobbies() {
+    let original = compactHobbies;
+    compactHobbies = (window.innerWidth <= cssTableMaxWidth);
+    if (original != compactHobbies) {
+        reloadHTMLTable();
+    }
+}
+
+function resizeTableFont() {
+    let table = document.getElementById("datatable");
+    let tablecontainer = document.getElementById("tablecontainer");
+    let paddingLeft = tablecontainer.style.paddingLeft;
+    let paddingLeftPixels = convertPercentsToPixels(2);
+
+    let tblfontsize = parseInt(window.getComputedStyle(table, null).getPropertyValue('font-size'));
+    mergeHobbies();
+
+    if (window.innerWidth <= cssTableMaxWidth) {
+        table.style.fontSize = "0.9em";
+    } else {
+        if (tablecontainer.clientWidth - (paddingLeftPixels * 2) < table.offsetWidth) {
+            while ((tablecontainer.clientWidth - (paddingLeftPixels * 2) < table.offsetWidth) && tblfontsize > 10) {
+                table.style.fontSize = String(tblfontsize) + "px";
+                tblfontsize--;
+            }
+        } else {
+            while ((tablecontainer.clientWidth - (paddingLeftPixels * 2) - 100 > table.offsetWidth) && tblfontsize <= 40) {
+                table.style.fontSize = String(tblfontsize) + "px";
+                tblfontsize++;
+                table = document.getElementById("datatable");
+            }
+        }
     }
 }
 
@@ -673,6 +751,7 @@ function checkForm() {
             document.getElementById("datatablebody").appendChild(people[people.length - 1].generateTableRow());
             sortData(currentSortedBy, false);
         }
+        resizeTableFont();
         checkTableEmpty();
         clearForm();
     }
@@ -745,11 +824,19 @@ function addSortingListeners() {
         e.preventDefault();
         sortData("lastEdited", true);
     });
+
+    for (let hobby of possibleHobbies) {
+        document.getElementById("tablehobby-" + hobby).addEventListener("click", (e) => {
+            e.preventDefault();
+            sortData(hobby, true);
+        });
+    }
 }
 
 function addJSONListeners() {
     document.getElementById("jsonimport").addEventListener("click", () => {
         confirmationDialog("Importieren?", "Alle derzeit gespeicherten Personen werden überschrieben.", importFromJSON);
+        resizeTableFont();
     });
 
     document.getElementById("jsonexport").addEventListener("click", () => {
@@ -762,9 +849,17 @@ function addJSONListeners() {
 
     document.getElementById("jsonupload").addEventListener("click", () => {
         confirmationDialog("Importieren?", "Alle derzeit gespeicherten Personen werden überschrieben.", uploadJSON);
+        resizeTableFont();
     });
 }
 
+
+async function main() {
+    resizeTableFont();
+}
+
+document.body.onresize = resizeTableFont;
+main();
 addJSONListeners();
 addSortingListeners();
 checkTableEmpty();

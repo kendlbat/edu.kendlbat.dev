@@ -72,7 +72,7 @@
                     <input type="checkbox" name="hobbies[]" value="cooking" id="formdata-hobbies-cooking">
                     <label for="formdata-hobbies-cooking">Kochen</label>
                     <input type="checkbox" name="hobbies[]" value="programming" id="formdata-hobbies-programming">
-                    <label for="formdata-hobbies-programming">Programmieren</label>
+                    <label for="formdata-hobbies-programming">Coden</label>
                 </span>
             </p>
             <p>
@@ -100,19 +100,25 @@
         <table id="datatable">
             <thead>
                 <tr>
-                    <th id="tablehead-name">Nachname&nbsp;<span class="th-slabel" id="th-name-slabel"></span></th>
-                    <th id="tablehead-firstname">Vorname&nbsp;<span class="th-slabel" id="th-firstname-slabel"></span></th>
-                    <th id="tablehead-zipcode">PLZ&nbsp;<span class="th-slabel" id="th-zipcode-slabel"></span></th>
-                    <th id="tablehead-location">Ort&nbsp;<span class="th-slabel" id="th-location-slabel"></span></th>
-                    <th id="tablehead-gender">Geschlecht&nbsp;<span class="th-slabel" id="th-gender-slabel"></span></th>
-                    <th id="tablehead-email">E-Mail&nbsp;<span class="th-slabel" id="th-email-slabel"></span></th>
-                    <th id="tablehead-birthdate">Geburtsdatum&nbsp;<span class="th-slabel" id="th-birthdate-slabel"></span></th>
-                    <th id="tablehead-hobbies">Hobbies&nbsp;<span class="th-slabel" id="th-hobbies-slabel"></span></th>
-                    <th id="tablehead-grade">Klasse&nbsp;<span class="th-slabel" id="th-grade-slabel"></span></th>
-                    <th id="tablehead-creationDate">Erstelldatum&nbsp;<span class="th-slabel" id="th-creationDate-slabel"></span></th>
-                    <th id="tablehead-lastEdited">Änderungsdatum&nbsp;<span class="th-slabel" id="th-lastEdited-slabel"></span></th>
-                    <th id="tablehead-edit">Bearbeiten</th>
-                    <th id="tablehead-delete">Löschen</th>
+                    <th rowspan="2" id="tablehead-name">Nachname<span class="th-slabel" id="th-name-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-firstname">Vorname<span class="th-slabel" id="th-firstname-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-zipcode">PLZ<span class="th-slabel" id="th-zipcode-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-location">Ort<span class="th-slabel" id="th-location-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-gender">Geschlecht<span class="th-slabel" id="th-gender-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-email">E-Mail<span class="th-slabel" id="th-email-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-birthdate">Geburtsdatum<span class="th-slabel" id="th-birthdate-slabel"></span></th>
+                    <th colspan="4" id="tablehead-hobbies">Hobbies<span class="th-slabel" id="th-hobbies-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-grade">Klasse<span class="th-slabel" id="th-grade-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-creationDate">Erstelldatum<span class="th-slabel" id="th-creationDate-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-lastEdited">Änderungsdatum<span class="th-slabel" id="th-lastEdited-slabel"></span></th>
+                    <th rowspan="2" id="tablehead-edit">Bearbeiten</th>
+                    <th rowspan="2" id="tablehead-delete">Löschen</th>
+                </tr>
+                <tr>
+                    <th id="tablehobby-sport">Sport<span class="th-slabel" id="th-sport-slabel"></span></th>
+                    <th id="tablehobby-reading">Lesen<span class="th-slabel" id="th-reading-slabel"></span></th>
+                    <th id="tablehobby-cooking">Kochen<span class="th-slabel" id="th-cooking-slabel"></span></th>
+                    <th id="tablehobby-programming">Coden<span class="th-slabel" id="th-programming-slabel"></span></th>
                 </tr>
             </thead>
             <tbody id="datatablebody"></tbody>
