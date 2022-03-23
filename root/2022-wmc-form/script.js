@@ -115,6 +115,10 @@ class Person {
         return this.id;
     }
 
+    setID(id) {
+        this.id = id;
+    }
+
     static fromJSON(json) {
         // Create person from json string
         let tempjson = JSON.parse(json);
@@ -192,7 +196,7 @@ class Person {
         td.innerText = this.getBirthdate().toLocaleString();
         tableRow.appendChild(td);
         td = document.createElement("td");
-        td.innerText = this.getHobbies();
+        td.innerText = this.getHobbies().length == 0 ? "-" : this.getHobbies().join(", ");
         tableRow.appendChild(td);
         td = document.createElement("td");
         td.innerText = this.getGrade();
@@ -426,6 +430,37 @@ function updatePerson(clickEvent) {
     }
 }
 
+function confirmationDialog(heading, text, yes_callback) {
+    let dialog = document.getElementById("confirmationdialog");
+    document.getElementById("confirmationdialog-heading").innerText = heading;
+    document.getElementById("confirmationdialog-text").innerText = text;
+    document.getElementById("confirmationdialog-yes").onclick = () => {
+        dialog.style.display = "none";
+        yes_callback();
+    }
+    document.getElementById("confirmationdialog-no").onclick = () => {
+        dialog.style.display = "none";
+    };
+    dialog.addEventListener("keyup", (event) => {
+        if (event.key == "Escape") {
+            dialog.style.display = "none";
+        } else if (event.key == "Enter") {
+            yes_callback();
+        }
+    });
+    dialog.style.display = "block";
+    dialog.focus();
+}
+
+function checkTableEmpty() {
+    let tablebody = document.getElementById("datatablebody");
+    if (tablebody.childElementCount == 0) {
+        document.getElementById("tablecontainer").style.display = "none";
+    } else {
+        document.getElementById("tablecontainer").style.display = "block";
+    }
+}
+
 function deletePerson(clickEvent) {
     let target = clickEvent.target;
     let delID = target.parentElement.parentElement.id;
@@ -433,6 +468,7 @@ function deletePerson(clickEvent) {
 
     document.getElementById("datatablebody").removeChild(document.getElementById(String(delID)));
     people.splice(people.indexOf(person), 1);
+    checkTableEmpty();
 }
 
 function importFromJSON() {
@@ -448,21 +484,59 @@ function importFromJSON() {
     for (let person of json) {
         newPeople.push(Person.fromJSON(JSON.stringify(person)));
     }
+
+    let ids = [];
+    for (let person of newPeople) {
+        while (ids.includes(person.getID())) {
+            person.setID(person.getID() + 1);
+        }
+        ids.push(person.getID());
+    }
+
     people = newPeople;
     reloadHTMLTable();
     json = null;
+    checkTableEmpty();
 }
 
 function exportToJSON() {
-    let jsontext = "[\n";
-    for (let person of people) {
-        jsontext += person.toJSON() + ",\n";
+    if (people.length != 0) {
+        let jsontext = "[\n";
+        for (let person of people) {
+            jsontext += person.toJSON() + ",\n";
+        }
+        jsontext = jsontext.substring(0, jsontext.length - 2);
+        jsontext = jsontext.replace(/\n/g, "\n\t");
+        jsontext = jsontext.replace(/\t/g, "    ");
+        jsontext += "\n]";
+        document.getElementById("jsoninterface").value = jsontext;
+    } else {
+        document.getElementById("jsoninterface").value = "";
     }
-    jsontext = jsontext.substring(0, jsontext.length - 2);
-    jsontext = jsontext.replace(/\n/g, "\n\t");
-    jsontext = jsontext.replace(/\t/g, "    ");
-    jsontext += "\n]";
-    document.getElementById("jsoninterface").value = jsontext;
+}
+
+function downloadJSON() {
+    exportToJSON();
+    let jsontext = document.getElementById("jsoninterface").value;
+    let downloadanchor = document.getElementById("jsondownloader");
+    downloadanchor.href = "data:text/plain;charset=utf-8," + encodeURIComponent(jsontext);
+    downloadanchor.download = "people.json";
+    downloadanchor.click();
+    downloadanchor.href = "";
+}
+
+function uploadJSON() {
+    let input = document.getElementById("jsonuploader");
+    input.click();
+    input.onchange = function() {
+        let file = input.files[0];
+        let reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById("jsoninterface").value = reader.result;
+            importFromJSON();
+        };
+        reader.readAsText(file);
+    }
 }
 
 function clearForm() {
@@ -583,6 +657,7 @@ function checkForm() {
             document.getElementById("datatablebody").appendChild(people[people.length - 1].generateTableRow());
             sortData(currentSortedBy, false);
         }
+        checkTableEmpty();
         clearForm();
     }
 }
@@ -637,10 +712,7 @@ function addSortingListeners() {
     
     document.getElementById("tablehead-hobbies").addEventListener("click", (e) => {
         e.preventDefault();
-        sortData("hobbies", true);
-    });
-    
-    document.getElementById("tablehead-grade").addEventListener("click", (e) => {
+        sortData("hobbies", true);    // Trigger file input
         e.preventDefault();
         sortData("grade", true);
     });
@@ -658,13 +730,22 @@ function addSortingListeners() {
 
 function addJSONListeners() {
     document.getElementById("jsonimport").addEventListener("click", () => {
-        importFromJSON();
+        confirmationDialog("Importieren?", "Alle derzeit gespeicherten Personen werden überschrieben.", importFromJSON);
     });
 
     document.getElementById("jsonexport").addEventListener("click", () => {
         exportToJSON();
     });
+
+    document.getElementById("jsondownload").addEventListener("click", () => {
+        confirmationDialog("Herunterladen?", "Die Daten werden als .JSON Datei lokal gespeichert.", downloadJSON);
+    });
+
+    document.getElementById("jsonupload").addEventListener("click", () => {
+        confirmationDialog("Importieren?", "Alle derzeit gespeicherten Personen werden überschrieben.", uploadJSON);
+    });
 }
 
 addJSONListeners();
 addSortingListeners();
+checkTableEmpty();

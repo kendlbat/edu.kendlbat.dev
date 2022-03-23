@@ -95,34 +95,50 @@
             </p>
             <button type="submit">Submit</button>
         </form>
-        <div id="tablecontainer">
-            <table id="datatable">
-                <thead>
-                    <tr>
-                        <th id="tablehead-name">Nachname&nbsp;<span class="th-slabel" id="th-name-slabel"></span></th>
-                        <th id="tablehead-firstname">Vorname&nbsp;<span class="th-slabel" id="th-firstname-slabel"></span></th>
-                        <th id="tablehead-zipcode">PLZ&nbsp;<span class="th-slabel" id="th-zipcode-slabel"></span></th>
-                        <th id="tablehead-location">Ort&nbsp;<span class="th-slabel" id="th-location-slabel"></span></th>
-                        <th id="tablehead-gender">Geschlecht&nbsp;<span class="th-slabel" id="th-gender-slabel"></span></th>
-                        <th id="tablehead-email">E-Mail&nbsp;<span class="th-slabel" id="th-email-slabel"></span></th>
-                        <th id="tablehead-birthdate">Geburtsdatum&nbsp;<span class="th-slabel" id="th-birthdate-slabel"></span></th>
-                        <th id="tablehead-hobbies">Hobbies&nbsp;<span class="th-slabel" id="th-hobbies-slabel"></span></th>
-                        <th id="tablehead-grade">Klasse&nbsp;<span class="th-slabel" id="th-grade-slabel"></span></th>
-                        <th id="tablehead-creationDate">Erstelldatum&nbsp;<span class="th-slabel" id="th-creationDate-slabel"></span></th>
-                        <th id="tablehead-lastEdited">Änderungsdatum&nbsp;<span class="th-slabel" id="th-lastEdited-slabel"></span></th>
-                        <th id="tablehead-edit">Bearbeiten</th>
-                        <th id="tablehead-delete">Löschen</th>
-                    </tr>
-                </thead>
-                <tbody id="datatablebody"></tbody>
-            </table>
+    </div>
+    <div id="tablecontainer">
+        <table id="datatable">
+            <thead>
+                <tr>
+                    <th id="tablehead-name">Nachname&nbsp;<span class="th-slabel" id="th-name-slabel"></span></th>
+                    <th id="tablehead-firstname">Vorname&nbsp;<span class="th-slabel" id="th-firstname-slabel"></span></th>
+                    <th id="tablehead-zipcode">PLZ&nbsp;<span class="th-slabel" id="th-zipcode-slabel"></span></th>
+                    <th id="tablehead-location">Ort&nbsp;<span class="th-slabel" id="th-location-slabel"></span></th>
+                    <th id="tablehead-gender">Geschlecht&nbsp;<span class="th-slabel" id="th-gender-slabel"></span></th>
+                    <th id="tablehead-email">E-Mail&nbsp;<span class="th-slabel" id="th-email-slabel"></span></th>
+                    <th id="tablehead-birthdate">Geburtsdatum&nbsp;<span class="th-slabel" id="th-birthdate-slabel"></span></th>
+                    <th id="tablehead-hobbies">Hobbies&nbsp;<span class="th-slabel" id="th-hobbies-slabel"></span></th>
+                    <th id="tablehead-grade">Klasse&nbsp;<span class="th-slabel" id="th-grade-slabel"></span></th>
+                    <th id="tablehead-creationDate">Erstelldatum&nbsp;<span class="th-slabel" id="th-creationDate-slabel"></span></th>
+                    <th id="tablehead-lastEdited">Änderungsdatum&nbsp;<span class="th-slabel" id="th-lastEdited-slabel"></span></th>
+                    <th id="tablehead-edit">Bearbeiten</th>
+                    <th id="tablehead-delete">Löschen</th>
+                </tr>
+            </thead>
+            <tbody id="datatablebody"></tbody>
+        </table>
+    </div>
+    <div id="jsonwrapper">
+        <div id="jsonutil-wrapper" class="nodisplay">
+            <a id="jsondownloader"></a>
+            <input type="file" id="jsonuploader">
+        </div>
+        <div id="jsonbuttons">
+            <button id="jsonimport">Importieren</button>
+            <button id="jsonexport">Exportieren</button>
+            <button id="jsondownload">Als Datei exportieren</button>
+            <button id="jsonupload">Aus Datei importieren</button>
+        </div>
+        <textarea id="jsoninterface" rows="10" cols="50" placeholder="{ JSON-Daten }"></textarea>
+        <script src="script.js"></script>
+    </div>
+    <div id="confirmationdialog">
+        <div>
+            <h2 id="confirmationdialog-heading"></h2>
+            <p id="confirmationdialog-text"></p>
+            <button id="confirmationdialog-yes">Ok</button>
+            <button id="confirmationdialog-no">Abbrechen</button>
         </div>
     </div>
-    <div id="jsonbuttons">
-        <button id="jsonimport">Import from JSON</button>
-        <button id="jsonexport">Export as JSON</button>
-    </div>
-    <textarea id="jsoninterface" rows="10" cols="50" placeholder="{ JSON-Daten }"></textarea>
-    <script src="script.js"></script>
 </body>
 </html>
