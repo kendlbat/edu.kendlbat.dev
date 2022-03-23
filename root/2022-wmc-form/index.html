@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Kendlbacher's Formular</title>
+    <!-- (c) Tobias Kendlbacher 2022 - All rights reserved 
+         When using my code in any way, either "kendlbat.dev" or "github.com/kendlbat" must be included in a way easily noticable by the user.
+         https://kendlbat.dev/
+         https://github.com/kendlbat
+         2BHIF-2022
+    -->
+</head>
+<body>
+    <div id="formcontainer">
+        <form action="javascript:checkForm();" id="dataform" method="POST">
+            <p>
+                <label for="formdata-name">Nachname: </label>
+                <input type="text" placeholder="Mustermann" name="name" id="formdata-name">
+                <span class="error" id="name-error"></span>
+            </p>
+            <p>
+                <label for="formdata-firstname">Vorname: </label>
+                <input type="text" placeholder="Max" name="firstname" id="formdata-firstname">
+                <span class="error" id="firstname-error"></span>
+            </p>
+            <p>
+                <label for="formdata-zipcode">PLZ: </label>
+                <input type="text" placeholder="9500" name="zipcode" id="formdata-zipcode">
+                <span class="error" id="zipcode-error"></span>
+            </p>
+            <p>
+                <label for="formdata-location">Ort: </label>
+                <input type="text" placeholder="Villach" name="location" id="formdata-location">
+                <span class="error" id="location-error"></span>
+            </p>
+            <p>
+                <label for="formdata-gender">Geschlecht: </label>
+                <a href="" id="formdata-hobbies"></a>
+                <span id="gender-selectionbox">
+                    <input type="radio" id="formdata-gender-male" value="male" name="gender">
+                    <label for="formdata-gender-male">Männlich</label>
+                    <input type="radio" id="formdata-gender-female" value="female" name="gender">
+                    <label for="formdata-gender-female">Weiblich</label>
+                    <input type="radio" name="gender" value="attack-helicopter" id="formdata-gender-attack-helicopter">
+                    <label for="formdata-gender-attack-helicopter">Attack Helicopter</label>
+                    <input type="radio" name="gender" value="other" id="formdata-gender-other">
+                    <label for="formdata-gender-other">Sonstige</label>
+                </span>
+                <span class="error" id="gender-error"></span>
+            </p>
+            <p>
+                <label for="formdata-email">E-Mail: </label>
+                <input type="email" placeholder="max@example.com" name="email" id="formdata-email">
+                <span class="error" id="email-error"></span>
+            </p>
+            <p>
+                <label for="formdata-birthdate">Geburtsdatum: </label>
+                <input type="date" name="birthdate" id="formdata-birthdate">
+                <span class="error" id="birthdate-error"></span>
+            </p>
+            <p>
+                <label for="formdata-hobbies">Hobbies: </label>
+                <a href="" id="formdata-hobbies"></a>
+                <span id="hobbies-selectionbox">
+                    <input type="checkbox" name="hobbies[]" value="sport" id="formdata-hobbies-sport">
+                    <label for="formdata-hobbies-sport">Sport</label>
+                    <input type="checkbox" name="hobbies[]" value="reading" id="formdata-hobbies-reading">
+                    <label for="formdata-hobbies-reading">Lesen</label>
+                    <input type="checkbox" name="hobbies[]" value="cooking" id="formdata-hobbies-cooking">
+                    <label for="formdata-hobbies-cooking">Kochen</label>
+                    <input type="checkbox" name="hobbies[]" value="programming" id="formdata-hobbies-programming">
+                    <label for="formdata-hobbies-programming">Programmieren</label>
+                </span>
+            </p>
+            <p>
+                <label for="formdata-class">Klasse: </label>
+                <select name="class" id="formdata-class">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </p>
+            <p>
+                <label for="formdata-isclasssuffix">Klassensuffix: </label>
+                <input type="checkbox" name="isclasssuffix" id="formdata-isclasssuffix" onclick="let elem = document.getElementById('form-classsuffixcontainer'); elem.style.display = (elem.style.display == 'none' ? 'block' :'none');" autocomplete="off">
+                <span id="form-classsuffixcontainer" style="display: none;">
+                    <input type="text" name="classsuffix" id="formdata-classsuffix" placeholder="SORG">
+                    <span id="classsuffix-error" class="error"></span>
+                </span>
+            </p>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="tablecontainer">
+            <table id="datatable">
+                <thead>
+                    <tr>
+                        <th id="tablehead-name">Nachname&nbsp;<span class="th-slabel" id="th-name-slabel"></span></th>
+                        <th id="tablehead-firstname">Vorname&nbsp;<span class="th-slabel" id="th-firstname-slabel"></span></th>
+                        <th id="tablehead-zipcode">PLZ&nbsp;<span class="th-slabel" id="th-zipcode-slabel"></span></th>
+                        <th id="tablehead-location">Ort&nbsp;<span class="th-slabel" id="th-location-slabel"></span></th>
+                        <th id="tablehead-gender">Geschlecht&nbsp;<span class="th-slabel" id="th-gender-slabel"></span></th>
+                        <th id="tablehead-email">E-Mail&nbsp;<span class="th-slabel" id="th-email-slabel"></span></th>
+                        <th id="tablehead-birthdate">Geburtsdatum&nbsp;<span class="th-slabel" id="th-birthdate-slabel"></span></th>
+                        <th id="tablehead-hobbies">Hobbies&nbsp;<span class="th-slabel" id="th-hobbies-slabel"></span></th>
+                        <th id="tablehead-grade">Klasse&nbsp;<span class="th-slabel" id="th-grade-slabel"></span></th>
+                        <th id="tablehead-creationDate">Erstelldatum&nbsp;<span class="th-slabel" id="th-creationDate-slabel"></span></th>
+                        <th id="tablehead-lastEdited">Änderungsdatum&nbsp;<span class="th-slabel" id="th-lastEdited-slabel"></span></th>
+                        <th id="tablehead-edit">Bearbeiten</th>
+                        <th id="tablehead-delete">Löschen</th>
+                    </tr>
+                </thead>
+                <tbody id="datatablebody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="jsonbuttons">
+        <button id="jsonimport">Import from JSON</button>
+        <button id="jsonexport">Export as JSON</button>
+    </div>
+    <textarea id="jsoninterface" rows="10" cols="50" placeholder="{ JSON-Daten }"></textarea>
+    <script src="script.js"></script>
+</body>
+</html>
