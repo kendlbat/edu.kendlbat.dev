@@ -132,4 +132,8 @@ a:active {
         grid-template-rows: 1fr 1fr 1fr 1fr;
         height: 200%;
     }
+
+    .menuitem:hover {
+        transform: none;
+    }
 }
