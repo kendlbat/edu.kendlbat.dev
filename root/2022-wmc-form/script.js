@@ -590,6 +590,7 @@ function importFromJSON() {
     reloadHTMLTable();
     json = null;
     checkTableEmpty();
+    resizeTableFont();
 }
 
 function exportToJSON() {
@@ -750,9 +751,9 @@ function checkForm() {
             document.getElementById("datatablebody").appendChild(people[people.length - 1].generateTableRow());
             sortData(currentSortedBy, false);
         }
-        resizeTableFont();
         checkTableEmpty();
         clearForm();
+        resizeTableFont();
     }
 }
 
