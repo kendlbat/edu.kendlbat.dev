@@ -18,22 +18,22 @@
         <form action="javascript:checkForm();" id="dataform" method="POST">
             <p>
                 <label for="formdata-name">Nachname: </label>
-                <input type="text" placeholder="Mustermann" name="name" id="formdata-name">
+                <input type="text" placeholder="Mustermann" name="name" id="formdata-name" maxlength="30">
                 <span class="error" id="name-error"></span>
             </p>
             <p>
                 <label for="formdata-firstname">Vorname: </label>
-                <input type="text" placeholder="Max" name="firstname" id="formdata-firstname">
+                <input type="text" placeholder="Max" name="firstname" id="formdata-firstname" maxlength="30">
                 <span class="error" id="firstname-error"></span>
             </p>
             <p>
                 <label for="formdata-zipcode">PLZ: </label>
-                <input type="text" placeholder="9500" name="zipcode" id="formdata-zipcode">
+                <input type="text" placeholder="9500" name="zipcode" id="formdata-zipcode" maxlength="4">
                 <span class="error" id="zipcode-error"></span>
             </p>
             <p>
                 <label for="formdata-location">Ort: </label>
-                <input type="text" placeholder="Villach" name="location" id="formdata-location">
+                <input type="text" placeholder="Villach" name="location" id="formdata-location" maxlength="58">
                 <span class="error" id="location-error"></span>
             </p>
             <p>

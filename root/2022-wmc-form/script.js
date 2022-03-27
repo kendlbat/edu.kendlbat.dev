@@ -540,7 +540,7 @@ function resizeTableFont() {
         table.style.fontSize = "0.9em";
     } else {
         if (tablecontainer.clientWidth - (paddingLeftPixels * 2) < table.offsetWidth) {
-            while ((tablecontainer.clientWidth - (paddingLeftPixels * 2) < table.offsetWidth) && tblfontsize > 10) {
+            while ((tablecontainer.clientWidth - (paddingLeftPixels * 2) < table.offsetWidth) && tblfontsize > 8) {
                 table.style.fontSize = String(tblfontsize) + "px";
                 tblfontsize--;
             }
