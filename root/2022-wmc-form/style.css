@@ -205,9 +205,34 @@ div#analogclock-wrapper {
     padding: 0px;
 }
 
+div#clockoverlay {
+    /*Circular background*/
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-color: black;
+    border-radius: 50%;
+    width: 100%;
+    aspect-ratio: 1;
+    z-index: 2;
+}
+
+#digitalclock {
+    position: absolute;
+    font-family: 'Courier New', Courier, monospace;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 174%;
+    color: white;
+    margin: 0px;
+    z-index: 3;
+}
+
 canvas#analogclock {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1;
 }
 
 @media (max-width: 1480px) {
@@ -218,6 +243,10 @@ canvas#analogclock {
 
     div#analogclock-wrapper {
         width: max(15%, 100px);
+    }
+
+    #digitalclock {
+        font-size: 160%;
     }
 
     /*Break the table so tds are stacked vertically*/
