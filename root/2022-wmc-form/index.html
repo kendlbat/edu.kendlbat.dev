@@ -136,7 +136,9 @@
             <button id="jsonupload">Aus Datei importieren</button>
         </div>
         <textarea id="jsoninterface" rows="10" cols="50" placeholder="{ JSON-Daten }"></textarea>
-        <script src="script.js"></script>
+    </div>
+    <div id="analogclock-wrapper">
+        <canvas id="analogclock" width="400" height="400"></canvas>
     </div>
     <div id="confirmationdialog">
         <audio id="uac-sound-player" class="nodisplay" src="assets/uac.mp3" preload="auto"></audio>
@@ -147,5 +149,7 @@
             <button id="confirmationdialog-no">Abbrechen</button>
         </div>
     </div>
+    <script src="clock.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
