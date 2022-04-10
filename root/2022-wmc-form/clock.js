@@ -1,3 +1,5 @@
+"use strict";
+
 let canvas = document.getElementById("analogclock");
 let ctx;
 let lastUpdateTime = new Date();
@@ -126,6 +128,7 @@ async function checkTime() {
 }
 
 if (canvas != null) {
+    console.log("Starting clock.js by Tobias Kendlbacher");
     ctx = canvas.getContext("2d");
     updateClock();
     setInterval(checkTime, 20);
