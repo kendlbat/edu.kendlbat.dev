@@ -141,6 +141,7 @@ document.getElementById("analogclock-wrapper").onmouseleave = async (e) => {
 if (canvas != null) {
     console.log("Starting clock.js by Tobias Kendlbacher");
     ctx = canvas.getContext("2d");
+    ctx.imageSmoothingEnabled = true;
     updateClock();
     setInterval(checkTime, 20);
 } else {
