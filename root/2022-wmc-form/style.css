@@ -238,6 +238,19 @@ canvas#analogclock {
     aspect-ratio: 1;
 }
 
+button#stopwatch-start {
+    position: absolute;
+    left: 50%;
+    top: 80%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-width: 100%;
+    padding: 1px 8px;
+    color: black;
+    background-color: limegreen;
+    border: none;
+}
+
 @media (max-width: 1480px) {
     #formcontainer, #tablecontainer, #jsonwrapper {
         margin: 10px;
@@ -250,6 +263,10 @@ canvas#analogclock {
 
     #digitalclock {
         font-size: 160%;
+    }
+
+    button#stopwatch-start {
+        padding: 1px 4px;
     }
 
     /*Break the table so tds are stacked vertically*/
