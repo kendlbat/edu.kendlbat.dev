@@ -8,6 +8,8 @@ let fixedTime = null;
 let epoch = new Date();
 epoch.setHours(0, 0, 0, 0);
 
+let preventMousemove = false;
+
 const digitalclock = document.getElementById("digitalclock");
 
 
@@ -193,20 +195,51 @@ async function resizeClockFont() {
     }
 }
 
-document.getElementById("analogclock-wrapper").onmousemove = async (e) => {
+async function clockOverlayCheck(e) {
+    if (e.target.id == "stopwatch-start") return;
+
+    if (e.type == "mousemove" && preventMousemove) {
+        preventMousemove = false;
+        return;
+    } else if (e.type == "touchstart") {
+        preventMousemove = true;
+    }
     // Check whether the mouse is over the clocks radius
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
     // Calculate distance from center
+    // If x is NaN
+    console.log(e)
+    if (isNaN(x)) {
+        x = e.touches[0].clientX - rect.left;
+        y = e.touches[0].clientY - rect.top;
+    }
     let radius = document.getElementById("analogclock").clientWidth / 2;
     let distance = Math.sqrt(Math.pow(x - radius, 2) + Math.pow(y - radius, 2));
+    console.log("Called: " + distance)
+    if (distance < 0 || distance > Number.MAX_SAFE_INTEGER) return;
     if (distance <= radius) {
-        document.getElementById("clockoverlay").classList.remove("nodisplay");
+        // Check if event is a touch event
+        if (e.type == "touchstart") {
+            document.getElementById("clockoverlay").classList.toggle("nodisplay");
+        } else {
+            document.getElementById("clockoverlay").classList.remove("nodisplay");
+        }
         resizeClockFont();
+        console.log("Shown")
     } else {
         document.getElementById("clockoverlay").classList.add("nodisplay");
+        console.log("Hidden")
     }
+}
+
+document.getElementById("analogclock-wrapper").onmousemove = async (e) => {
+    clockOverlayCheck(e);
+}
+
+document.getElementById("analogclock-wrapper").ontouchstart = async (e) => {
+    clockOverlayCheck(e);
 }
 
 document.getElementById("analogclock-wrapper").onmouseleave = async (e) => {
@@ -252,5 +285,4 @@ document.getElementById("stopwatch-start").addEventListener("click", () => {
         secondaryColor = defaultSecondaryColor;
     }
 });
-
 resizeClockFont();
