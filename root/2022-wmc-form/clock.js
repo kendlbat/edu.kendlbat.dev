@@ -8,6 +8,13 @@ let fixedTime = null;
 let epoch = new Date();
 epoch.setHours(0, 0, 0, 0);
 
+let bigMovementDone = [true, true];
+
+let defaultMovementPerTick = 0.025;
+let movementPerTick = defaultMovementPerTick;
+
+let handles = [lastUpdateTime.getHours(), lastUpdateTime.getMinutes()];
+
 let preventMousemove = false;
 
 const digitalclock = document.getElementById("digitalclock");
@@ -35,6 +42,12 @@ async function updateClock() {
         digitalclock.innerText = time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0") + ":" + time.getSeconds().toString().padStart(2, "0");
     } else {
         digitalclock.innerText = time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0") + ":" + time.getSeconds().toString().padStart(2, "0") + ":" + time.getMilliseconds().toString().padStart(3, "0");
+    }
+
+    if (movementPerTick != defaultMovementPerTick) {
+        if (bigMovementDone[0] && bigMovementDone[1]) {
+            movementPerTick = defaultMovementPerTick;
+        }
     }
     
 
@@ -85,7 +98,15 @@ async function updateClock() {
 
     // Draw minute handle
     let minute = time.getMinutes();
-    angle = ((Math.PI * 2) * (minute / 60)) - (Math.PI / 2); 
+
+    if (handles[1] < minute - movementPerTick) {
+        handles[1] += movementPerTick;
+    } else if (!bigMovementDone[1]) {
+        bigMovementDone[1] = true;
+        handles[1] = minute;
+    }
+
+    angle = ((Math.PI * 2) * (handles[1] / 60)) - (Math.PI / 2); 
     ctx.lineWidth = radius / 23;
     ctx.strokeStyle = defaultColor;
     x1 = radius * -0.15 * Math.cos(angle);
@@ -111,7 +132,15 @@ async function updateClock() {
     // Draw hour handle
     ctx.beginPath();
     let hour = (time.getHours() % 12) + (minute / 60);
-    angle = ((Math.PI * 2) * (hour / 12)) - (Math.PI / 2);
+
+    if (handles[0] < hour - movementPerTick) {
+        handles[0] += movementPerTick / 4;
+    } else if (!bigMovementDone[0]) {
+        bigMovementDone[0] = true;
+        handles[0] = hour;
+    }
+
+    angle = ((Math.PI * 2) * (handles[0] / 12)) - (Math.PI / 2);
     ctx.lineWidth = radius / 18;
     ctx.strokeStyle = defaultColor;
     x1 = radius * -0.15 * Math.cos(angle);
@@ -175,15 +204,15 @@ async function updateClock() {
     ctx.closePath();
 }
 
+function initBigMovement(newMPT) {
+    bigMovementDone[0] = false;
+    bigMovementDone[1] = false;
+    movementPerTick = newMPT;
+}
+
 async function checkTime() {
-    if (stopwatch == null) {
-        if (new Date() - lastUpdateTime > 1000) {
-            lastUpdateTime = new Date();
-            updateClock();
-        }
-    } else {
-        updateClock();
-    }
+    lastUpdateTime = new Date();
+    updateClock();
 }
 
 async function resizeClockFont() {
@@ -258,7 +287,11 @@ document.getElementById("stopwatch-start").addEventListener("click", () => {
         fixedTime = null;
         stopwatch = new Date().getTime();
         digitalclock.innerText = "00:00:00:000";
+        movementPerTick = 0.25;
+        handles[0] = 0;
+        handles[1] = 0;
         resizeClockFont();
+        updateClock();
         btn.innerText = "Stop";
         btn.style.backgroundColor = "red";
         secondaryColor = "limegreen";
@@ -275,6 +308,7 @@ document.getElementById("stopwatch-start").addEventListener("click", () => {
         digitalclock.innerText = time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0") + ":" + time.getSeconds().toString().padStart(2, "0");
         updateClock();
         resizeClockFont();
+        initBigMovement(0.3);
         btn.innerText = "Start";
         btn.style.backgroundColor = "limegreen";
         secondaryColor = defaultSecondaryColor;
