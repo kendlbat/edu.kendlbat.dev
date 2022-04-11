@@ -7,6 +7,7 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
+    background-color: #222;
 }
 
 div#analogclock-wrapper {
@@ -71,6 +72,12 @@ button#stopwatch-start {
     div#analogclock-wrapper {
         width: 98%;
         height: auto;
+    }
+}
+
+@media iframe {
+    body {
+        background-color: none;
     }
 }
 
