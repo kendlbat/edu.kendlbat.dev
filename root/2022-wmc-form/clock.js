@@ -209,15 +209,12 @@ async function clockOverlayCheck(e) {
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
     // Calculate distance from center
-    // If x is NaN
-    console.log(e)
     if (isNaN(x)) {
         x = e.touches[0].clientX - rect.left;
         y = e.touches[0].clientY - rect.top;
     }
     let radius = document.getElementById("analogclock").clientWidth / 2;
     let distance = Math.sqrt(Math.pow(x - radius, 2) + Math.pow(y - radius, 2));
-    console.log("Called: " + distance)
     if (distance < 0 || distance > Number.MAX_SAFE_INTEGER) return;
     if (distance <= radius) {
         // Check if event is a touch event
@@ -227,10 +224,8 @@ async function clockOverlayCheck(e) {
             document.getElementById("clockoverlay").classList.remove("nodisplay");
         }
         resizeClockFont();
-        console.log("Shown")
     } else {
         document.getElementById("clockoverlay").classList.add("nodisplay");
-        console.log("Hidden")
     }
 }
 
