@@ -208,11 +208,11 @@ div#analogclock-wrapper {
 div#clockoverlay {
     /*Circular background*/
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: -1px;
+    top: -1px;
     background-color: black;
     border-radius: 50%;
-    width: 100%;
+    width: calc(100% + 2px);
     aspect-ratio: 1;
     z-index: 2;
 }
@@ -231,7 +231,10 @@ div#clockoverlay {
 }
 
 canvas#analogclock {
-    width: 100%;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: calc(100% - 2px);
     aspect-ratio: 1;
 }
 
