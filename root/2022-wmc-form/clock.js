@@ -195,6 +195,53 @@ async function resizeClockFont() {
     }
 }
 
+let coverlay_interval = null;
+let coverlay_br = 50;
+let coverlay_blockAnim = false;
+
+function showClockOverlay() {
+    if (coverlay_blockAnim) return;
+    if (coverlay_interval != null) {
+        clearInterval(coverlay_interval);
+        coverlay_interval = null;
+    }
+    document.getElementById("clockoverlay").classList.remove("nodisplay");
+    coverlay_blockAnim = true;
+    coverlay_interval = setInterval(() => {
+        coverlay_br--;
+        if (coverlay_br >= 14) {
+            document.getElementById("clockoverlay").style.borderRadius = coverlay_br + "%";
+        } else {
+            if (coverlay_interval != null) {
+                clearInterval(coverlay_interval);
+                coverlay_interval = null;
+            }
+        }
+    }, 10);
+}
+
+function hideClockOverlay() {
+    if (!coverlay_blockAnim) return;
+    if (coverlay_interval != null) {
+        clearInterval(coverlay_interval);
+        coverlay_interval = null;
+    }
+    coverlay_blockAnim = false;
+
+    coverlay_interval = setInterval(() => {
+        coverlay_br++;
+        if (coverlay_br <= 50) {
+            document.getElementById("clockoverlay").style.borderRadius = coverlay_br + "%";
+        } else {
+            if (coverlay_interval != null) {
+                clearInterval(coverlay_interval);
+                coverlay_interval = null;
+                document.getElementById("clockoverlay").classList.add("nodisplay");
+            }
+        }
+    }, 10);
+}
+
 async function clockOverlayCheck(e) {
     if (e.target.id == "stopwatch-start") return;
 
@@ -219,13 +266,17 @@ async function clockOverlayCheck(e) {
     if (distance <= radius) {
         // Check if event is a touch event
         if (e.type == "touchstart") {
-            document.getElementById("clockoverlay").classList.toggle("nodisplay");
+            if (document.getElementById("clockoverlay").classList.contains("nodisplay")) {
+                showClockOverlay();
+            } else {
+                hideClockOverlay();
+            }
         } else {
-            document.getElementById("clockoverlay").classList.remove("nodisplay");
+            showClockOverlay();
         }
         resizeClockFont();
     } else {
-        document.getElementById("clockoverlay").classList.add("nodisplay");
+        hideClockOverlay();
     }
 }
 
@@ -238,7 +289,7 @@ document.getElementById("analogclock-wrapper").ontouchstart = async (e) => {
 }
 
 document.getElementById("analogclock-wrapper").onmouseleave = async (e) => {
-    document.getElementById("clockoverlay").classList.add("nodisplay");
+    hideClockOverlay();
 }
 
 if (canvas != null) {
@@ -265,6 +316,7 @@ document.getElementById("stopwatch-start").addEventListener("click", () => {
     } else if (btn.innerText == "Stop") {
         fixedTime = new Date(new Date().getTime() - stopwatch);
         stopwatch = null;
+        updateClock();
         btn.innerText = "Clear";
         btn.style.backgroundColor = "orange";
         secondaryColor = "orange";
