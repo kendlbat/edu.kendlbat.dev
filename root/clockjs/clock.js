@@ -101,8 +101,8 @@ async function updateClock() {
     ctx.beginPath();
     ctx.fillStyle = "white";
 
-    ctx.moveTo(radius * 0.935 * Math.cos(angle - 0.023) + radius, radius * 0.935 * Math.sin(angle - 0.023) + radius);
-    ctx.lineTo(radius * 0.935 * Math.cos(angle + 0.023) + radius, radius * 0.935 * Math.sin(angle + 0.023) + radius);
+    ctx.moveTo(radius * 0.935 * Math.cos(angle - 0.0238) + radius, radius * 0.935 * Math.sin(angle - 0.0238) + radius);
+    ctx.lineTo(radius * 0.935 * Math.cos(angle + 0.0238) + radius, radius * 0.935 * Math.sin(angle + 0.0238) + radius);
     ctx.lineTo(radius * 1 * Math.cos(angle) + radius, radius * 1 * Math.sin(angle) + radius);
 
     ctx.fill();
@@ -159,8 +159,8 @@ async function updateClock() {
     // Draw a small red triangle at the second hand
     ctx.beginPath();
     ctx.fillStyle = secondaryColor;
-    ctx.moveTo(radius * 0.945 * Math.cos(angle - 0.017) + radius, radius * 0.945 * Math.sin(angle - 0.017) + radius);
-    ctx.lineTo(radius * 0.945 * Math.cos(angle + 0.017) + radius, radius * 0.945 * Math.sin(angle + 0.017) + radius);
+    ctx.moveTo(radius * 0.945 * Math.cos(angle - 0.01575) + radius, radius * 0.945 * Math.sin(angle - 0.01575) + radius);
+    ctx.lineTo(radius * 0.945 * Math.cos(angle + 0.01575) + radius, radius * 0.945 * Math.sin(angle + 0.01575) + radius);
     ctx.lineTo(radius * 1 * Math.cos(angle) + radius, radius * 1 * Math.sin(angle) + radius);
     ctx.fill();
     ctx.closePath();
