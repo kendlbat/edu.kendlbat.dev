@@ -177,7 +177,7 @@ async function updateClock() {
 
 async function checkTime() {
     if (stopwatch == null) {
-        if (new Date() - lastUpdateTime > 1000) {
+        if (new Date() - lastUpdateTime > 480) {
             lastUpdateTime = new Date();
             updateClock();
         }
