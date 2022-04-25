@@ -12,7 +12,7 @@ html {
     box-sizing: border-box;
 
     --accent-color: purple;
-    --error-color: red;
+    --error-color: black;
     --error-bg-color: rgba(255, 0, 0, 0.15);
     --default-border-radius: 5px;
     --default-border: 1px solid grey;
