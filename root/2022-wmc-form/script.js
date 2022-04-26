@@ -858,6 +858,7 @@ async function main() {
     resizeTableFont();
 }
 
+document.getElementById("dataform").addEventListener("submit", checkForm);
 document.body.onresize = resizeTableFont;
 main();
 addJSONListeners();
