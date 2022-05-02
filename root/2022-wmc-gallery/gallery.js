@@ -6,13 +6,24 @@ async function getAvailableImages() {
     return images;
 }
 
+async function showLoadScreen() {
+    document.getElementById("loadscreen").classList.remove("novisible");
+}
+
+async function hideLoadScreen() {
+    document.getElementById("loadscreen").classList.add("novisible");
+}
+
 async function loadMainImage(image) {
     let mainimg = images[image];
+
+    showLoadScreen();
 
     let prevSelected = document.querySelectorAll(".preview-image.selected")[0];
 
     if (prevSelected) prevSelected.classList.remove('selected');
     document.getElementById(`preview-image-${image}`).classList.add('selected');
+
     document.getElementById("main-image").src = `images/highres/${mainimg}`;
     document.getElementById("main-image-bg").src = `images/highres/${mainimg}`;
 }
@@ -35,6 +46,8 @@ async function loadPreviewImages(images) {
 }
 
 async function main() {
+    showLoadScreen();
+
     images = await getAvailableImages();
 
     let mainImg = document.createElement("img");
@@ -47,6 +60,14 @@ async function main() {
 
     document.getElementById('main-image-wrapper').appendChild(mainImg);
     document.getElementById('main-bg-wrapper').appendChild(mainImgBg);
+
+    mainImg.addEventListener("load", (e) => {
+        hideLoadScreen();
+    });
+
+    if (document.getElementById("main-image").complete) {
+        hideLoadScreen();
+    }
 
 
     loadPreviewImages(Object.keys(images));
