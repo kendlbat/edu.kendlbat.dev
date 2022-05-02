@@ -111,7 +111,7 @@ body {
     visibility: hidden;
 }
 
-@media (max-width: 1370px) {
+@media (orientation: portrait) {
     #image-main-wrapper {
         position: fixed;
         left: 0;
@@ -151,4 +151,4 @@ body {
         border: 1px solid #000;
         height: 100%;
     }
-}
+}10%;
