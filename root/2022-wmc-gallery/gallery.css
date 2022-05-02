@@ -67,6 +67,7 @@ body {
     overflow: hidden;
     border: 1px solid #000;
     height: 18%;
+    min-height: 120px;
 }
 
 .preview-image {
@@ -151,4 +152,4 @@ body {
         border: 1px solid #000;
         height: 100%;
     }
-}10%;
+}
