@@ -75,13 +75,11 @@ async function main() {
     document.getElementById("desktop-preview-toggle").addEventListener("click", async () => {
         if (previewExpanded) {
             previewExpanded = false;
-            document.getElementById("desktop-preview-collapse").classList.add("nodisplay");
-            document.getElementById("desktop-preview-expand").classList.remove("nodisplay");
+            document.getElementById("desktop-preview-collapse").classList.add("rotatetoggle");
             document.body.classList.add("previewhidden");
         } else {
             previewExpanded = true;
-            document.getElementById("desktop-preview-collapse").classList.remove("nodisplay");
-            document.getElementById("desktop-preview-expand").classList.add("nodisplay");
+            document.getElementById("desktop-preview-collapse").classList.remove("rotatetoggle");
             document.body.classList.remove("previewhidden");
         }
     });
@@ -89,13 +87,11 @@ async function main() {
     document.getElementById("mobile-preview-toggle").addEventListener("click", async () => {
         if (previewExpanded) {
             previewExpanded = false;
-            document.getElementById("mobile-preview-collapse").classList.add("nodisplay");
-            document.getElementById("mobile-preview-expand").classList.remove("nodisplay");
+            document.getElementById("mobile-preview-collapse").classList.add("rotatetoggle");
             document.body.classList.add("previewhidden");
         } else {
             previewExpanded = true;
-            document.getElementById("mobile-preview-collapse").classList.remove("nodisplay");
-            document.getElementById("mobile-preview-expand").classList.add("nodisplay");
+            document.getElementById("mobile-preview-collapse").classList.remove("rotatetoggle");
             document.body.classList.remove("previewhidden");
         }
     });
