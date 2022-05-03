@@ -37,10 +37,12 @@ async function loadPreviewImages(images) {
         img.src = `images/lowres/${image}`;
         img.className = 'preview-image';
         img.id = "preview-image-" + image;
+        img.draggable = true;
         img.alt = "Image Preview: " + image;
         div.addEventListener('click', () => {
             loadMainImage(image);
         });
+
         div.appendChild(img);
         document.getElementById('image-preview-wrapper').appendChild(div);
     }
@@ -96,7 +98,34 @@ async function main() {
             document.getElementById("mobile-preview-expand").classList.add("nodisplay");
             document.body.classList.remove("previewhidden");
         }
-    })
+    });
+
+    document.getElementById("main-image-wrapper").ondragenter = (e) => {
+        e.preventDefault();
+    }
+
+    document.getElementById("main-image-wrapper").ondragover = (e) => {
+        e.preventDefault();
+    }
+
+    document.getElementById("main-image-wrapper").ondrop = (e) => {
+        e.preventDefault();
+        console.log(e);
+        let imgUrl = e.dataTransfer.getData("text/plain");
+
+        showLoadScreen();
+
+        let prevSelected = document.querySelectorAll(".preview-image.selected")[0];
+
+        if (prevSelected) prevSelected.classList.remove('selected');
+
+        if (imgUrl.includes("images/lowres/")) {
+            imgUrl = imgUrl.replace("images/lowres/", "images/highres/");
+        }
+
+        document.getElementById("main-image").src = imgUrl;
+        document.getElementById("main-image-bg").src = imgUrl;
+    }
 
     mainImg.addEventListener("load", (e) => {
         hideLoadScreen();
