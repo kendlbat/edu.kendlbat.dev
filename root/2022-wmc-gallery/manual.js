@@ -1,5 +1,6 @@
 let images;
 let currentIndex = 0;
+let lastScrollTime = new Date(0);
 
 async function getAvailableImages() {
     const response = await fetch('images/index.json');
@@ -31,6 +32,16 @@ async function main() {
 
     document.getElementById("imnext").addEventListener("click", toNext);
     document.getElementById("imprev").addEventListener("click", toPrevious);
+
+    document.documentElement.addEventListener("wheel", (e) => {
+        if (lastScrollTime.getTime() + 250 > new Date().getTime()) return;
+        lastScrollTime = new Date();
+        if (e.deltaY > 0) {
+            toNext();
+        } else {
+            toPrevious();
+        }
+    });
 }
 
 main();

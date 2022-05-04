@@ -97,3 +97,61 @@
     right: 0;
     border-radius: 15px 0px 0px 15px;
 }
+
+@media (orientation: portrait) {
+    #image-current-wrapper {
+        width: 100%;
+    }
+
+    #image-next-wrapper {
+        position: fixed;
+        aspect-ratio: 16/9;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        z-index: 2;
+        width: 70%;
+        top: 100%;
+        perspective: 400px;
+    }
+
+    #image-previous-wrapper {
+        position: fixed;
+        aspect-ratio: 16/9;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        z-index: 2;
+        width: 70%;
+        perspective: 400px;
+    }
+
+    #image-next-main-wrapper {
+        transform: rotateX(20deg);
+    }
+    
+    #image-previous-main-wrapper {
+        transform: rotateX(-20deg);
+    }
+    
+    #imprev, #imnext {
+        left: 0;
+        height: 30%;
+        width: 100%;
+        border-radius: 0px;
+        transition: none;
+    }
+
+    #imprev {
+        top: 0;
+        transform: none;
+    }
+
+    #imnext {
+        top: 100%;
+        transform: translateY(-100%);
+    }
+
+    #imprev:hover, #imnext:hover {
+        filter: opacity(0);
+    }
+}
