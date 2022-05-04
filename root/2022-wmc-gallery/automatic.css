@@ -1,0 +1,45 @@
+#imshow {
+    background-color: black;
+}
+
+#imshow, #image-main, #image-bg, img {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.progressbar {
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 5px;
+    position: fixed;
+    z-index: 3;
+}
+
+#progressbar0 {
+    background-color: aqua;
+}
+
+#progressbar1 {
+    background-color: teal;
+}
+
+#image-main {
+    z-index: 2;
+}
+
+#image-bg {
+    z-index: 1;
+}
+
+#image-main img {
+    object-fit: contain;
+}
+
+#image-bg img {
+    object-fit: cover;
+    filter: blur(8px);
+}
