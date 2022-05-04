@@ -42,6 +42,14 @@ async function main() {
             toPrevious();
         }
     });
+
+    document.documentElement.addEventListener("keydown", (e) => {
+        if (e.key == "ArrowUp" || e.key == "ArrowLeft") {
+            toPrevious();
+        } else if (e.key == "ArrowDown" || e.key == "ArrowRight") {
+            toNext();
+        }
+    })
 }
 
 main();
