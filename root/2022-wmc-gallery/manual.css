@@ -73,7 +73,7 @@
     height: 50%;
     width: 70px;
     transform: translateY(-50%);
-    filter: opacity(0);
+    filter: opacity(0.4);
     transition: filter 300ms ease-in-out;
 }
 
