@@ -42,9 +42,9 @@ img {
     width: 200%;
     background: repeating-linear-gradient(90deg,
             aqua,
-            aqua 2%,
-            teal 2%,
-            teal 4%);
+            aqua 2.5%,
+            teal 2.5%,
+            teal 5%);
     visibility: hidden;
     animation: loading-bar-animation 7s linear infinite;
 }
