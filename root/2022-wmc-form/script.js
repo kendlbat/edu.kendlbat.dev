@@ -431,7 +431,9 @@ function leadingZeros(number, amount) {
 }
 
 function getPersonByID(id) {
-    const result = people.filter(person => person.getID() === id);
+    const result = people.filter(person => {
+        return person.getID() == id
+    });
     if (result.length > 0) {
         return result[0];
     }
