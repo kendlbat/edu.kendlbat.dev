@@ -7,7 +7,7 @@
 // 2BHIF-2022
 
 const possibleHobbies = ["sport", "reading", "cooking", "programming"];
-var compactHobbies = false;
+let compactHobbies = false;
 const cssTableMaxWidth = 1480;
 
 class Address {
@@ -32,17 +32,10 @@ class Person {
      */
     constructor(formdata) {
         if (formdata != null) {
-            this.name = formdata.get("name");
-            this.firstname = formdata.get("firstname");
-            this.address = new Address(formdata.get("location"), formdata.get("zipcode"));
-            this.gender = formdata.get("gender");
-            this.email = formdata.get("email");
-            this.hobbies = formdata.getAll("hobbies[]");
-            this.grade = formdata.get("class") + ((formdata.get("isclasssuffix") == "on") ? (formdata.get("classsuffix")) : (""));
-            this.birthdate = new Date(formdata.get("birthdate"));
             this.creationDate = new Date();
             this.lastEdited = new Date();
             this.id = this.creationDate.getTime();
+            this.update(formdata)
         }
     }
 
@@ -57,7 +50,9 @@ class Person {
         this.gender = formdata.get("gender");
         this.email = formdata.get("email");
         this.hobbies = formdata.getAll("hobbies[]");
-        this.grade = formdata.get("class") + ((formdata.get("isclasssuffix") == "on") ? (formdata.get("classsuffix")) : (""));
+
+        const classsuffix = formdata.get("classsuffix");
+        this.grade = formdata.get("class") + (classsuffix ? classsuffix : "");
         this.birthdate = new Date(formdata.get("birthdate"));
         this.lastEdited = new Date();
     }
@@ -70,9 +65,9 @@ class Person {
         return this.firstname;
     }
 
-    getFullName() {
+/*    getFullName() {       // unused
         return this.getName() + " " + this.getFirstname();
-    }
+    }*/
 
     getAddress() {
         return this.address;
@@ -124,19 +119,18 @@ class Person {
 
     static fromJSON(json) {
         // Create person from json string
-        let tempjson = JSON.parse(json);
         let person = new Person();
-        person.name = tempjson.name;
-        person.firstname = tempjson.firstname;
-        person.address = new Address(tempjson.address.city, tempjson.address.zipcode);
-        person.gender = tempjson.gender;
-        person.email = tempjson.email;
-        person.birthdate = new Date(tempjson.birthdate);
-        person.hobbies = tempjson.hobbies;
-        person.grade = tempjson.grade;
-        person.creationDate = new Date(tempjson.creationDate);
-        person.lastEdited = new Date(tempjson.lastEdited);
-        person.id = tempjson.id;
+        person.name = json.name;
+        person.firstname = json.firstname;
+        person.address = new Address(json.address.city, json.address.zipcode);
+        person.gender = json.gender;
+        person.email = json.email;
+        person.birthdate = new Date(json.birthdate);
+        person.hobbies = json.hobbies;
+        person.grade = json.grade;
+        person.creationDate = new Date(json.creationDate);
+        person.lastEdited = new Date(json.lastEdited);
+        person.id = json.id;
         return person;
     }
 
@@ -174,6 +168,9 @@ class Person {
         return json;
     }
 
+
+
+
     generateTableRow() {
         let tableRow = document.createElement("tr");
         tableRow.id = this.getID();
@@ -197,7 +194,11 @@ class Person {
         tableRow.appendChild(td);
         td = document.createElement("td");
         let birthdate = this.getBirthdate();
-        td.innerText = (birthdate.getDate() < 10 ? "0" : "") + birthdate.getDate() + "." + (birthdate.getMonth() < 9 ? "0" : "") + (birthdate.getMonth() + 1) + "." + birthdate.getFullYear();
+
+
+        td.innerText = [leadingZeros(birthdate.getDate(), 2),
+            leadingZeros(birthdate.getMonth(), 2),
+            leadingZeros(birthdate.getFullYear(), 2)].join(".");
         tableRow.appendChild(td);
 
         if (compactHobbies) {
@@ -261,10 +262,10 @@ console.log("Free to use and distribute for educational purposes, as long as the
 console.log("https://kendlbat.dev/");
 console.log("https://github.com/kendlbat");
 
-var currentSortedBy = "name";
-var people = [];
-var updateID = -1;
-var cdialogActive = false;
+let currentSortedBy = "name";
+let people = [];
+let updateID = -1;
+let cdialogActive = false;
 
 class Sorting {
     static byName(reverse) {
@@ -419,26 +420,34 @@ function sortData(sortBy, byclick) {
             if (possibleHobbies.includes(sortBy)) {
                 Sorting.byHobby(sortBy, reverse);
             }
-            break;
     }
 
     reloadHTMLTable();
 }
 
+function leadingZeros(number, amount) {
+    let zero = amount - number.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + number;
+}
+
 function getPersonByID(id) {
-    for (let i = 0; i < people.length; i++) {
-        if (people[i].getID() == id) {
-            return people[i];
-        }
+    const result = people.filter(person => person.getID() === id);
+    if (result.length > 0) {
+        return result[0];
     }
     return null;
 }
 
 function updatePerson(clickEvent) {
     let target = clickEvent.target;
-    if (updateID != Number(getPersonByID(target.parentElement.parentElement.id).getID())) {
-        let person = getPersonByID(target.parentElement.parentElement.id);
+    const id = target.parentElement.parentElement.id;
+    const person = getPersonByID(id);
 
+    if (!person) {
+        throw `Person with ID ${id} couldn't be found`
+    }
+
+    if (updateID !== person.getID()) {
         updateID = Number(person.id);
         target.parentElement.parentElement.style.border = "2px solid red";
 
@@ -453,11 +462,7 @@ function updatePerson(clickEvent) {
         document.getElementById("formdata-birthdate").value = now.getFullYear()+"-"+(("0" + (now.getMonth() + 1)).slice(-2))+"-"+(("0" + now.getDate()).slice(-2));
         document.getElementById("formdata-gender-" + person.getGender()).click();
         document.getElementsByName("hobbies[]").forEach((element) => {
-            if (person.hobbies.includes(element.value)) {
-                element.checked = true;
-            } else {
-                element.checked = false;
-            }
+            element.checked = person.hobbies.includes(element.value)
         });
         document.getElementById("formdata-class").value = parseInt(person.getGrade().substring(0, 1));
         document.getElementById("formdata-isclasssuffix").checked = person.getGrade().length > 1;
@@ -487,11 +492,11 @@ function confirmationDialog(heading, text, yes_callback) {
     };
     let eventKeyupFunction = (event) => {
         if (cdialogActive) {
-            if (event.key == "Escape") {
+            if (event.key === "Escape") {
                 dialog.style.display = "none";
                 cdialogActive = false;
                 document.removeEventListener("keyup", eventKeyupFunction);
-            } else if (event.key == "Enter") {
+            } else if (event.key === "Enter") {
                 yes_callback();
                 dialog.style.display = "none";
                 cdialogActive = false;
@@ -508,7 +513,7 @@ function confirmationDialog(heading, text, yes_callback) {
 
 function checkTableEmpty() {
     let tablebody = document.getElementById("datatablebody");
-    if (tablebody.childElementCount == 0) {
+    if (tablebody.childElementCount === 0) {
         document.getElementById("tablecontainer").style.display = "none";
     } else {
         document.getElementById("tablecontainer").style.display = "block";
@@ -522,7 +527,7 @@ function convertPercentsToPixels(percents) {
 function mergeHobbies() {
     let original = compactHobbies;
     compactHobbies = (window.innerWidth <= cssTableMaxWidth);
-    if (original != compactHobbies) {
+    if (original !== compactHobbies) {
         reloadHTMLTable();
     }
 }
@@ -530,7 +535,6 @@ function mergeHobbies() {
 function resizeTableFont() {
     let table = document.getElementById("datatable");
     let tablecontainer = document.getElementById("tablecontainer");
-    let paddingLeft = tablecontainer.style.paddingLeft;
     let paddingLeftPixels = convertPercentsToPixels(2);
 
     let tblfontsize = parseInt(window.getComputedStyle(table, null).getPropertyValue('font-size'));
@@ -575,7 +579,7 @@ function importFromJSON() {
     }
     let newPeople = [];
     for (let person of json) {
-        newPeople.push(Person.fromJSON(JSON.stringify(person)));
+        newPeople.push(Person.fromJSON(person));
     }
 
     let ids = [];
@@ -594,7 +598,7 @@ function importFromJSON() {
 }
 
 function exportToJSON() {
-    if (people.length != 0) {
+    if (people.length !== 0) {
         let jsontext = "[\n";
         for (let person of people) {
             jsontext += person.toJSON() + ",\n";
@@ -676,7 +680,7 @@ function checkForm() {
 
     let zipcode = formdata.get("zipcode");
 
-    if (zipcode.length != 4) {
+    if (zipcode.length !== 4) {
         errors["zipcode"] = "Postleitzahl muss vierstellig sein.";
     } else if (zipcode.match("[^0-9]")) {
         errors["zipcode"] = "Postleitzahl darf nur Zahlen enthalten.";
@@ -739,8 +743,8 @@ function checkForm() {
         document.getElementById(errorloc + "-error").innerText = errortext
     }
 
-    if (Object.entries(errors).length == 0) {
-        if (updateID != -1) {
+    if (Object.entries(errors).length === 0) {
+        if (updateID !== -1) {
             getPersonByID(updateID).update(formdata);
             document.getElementById("datatablebody").removeChild(document.getElementById(String(updateID)));
             document.getElementById("datatablebody").appendChild(getPersonByID(updateID).generateTableRow());
@@ -761,7 +765,7 @@ function checkForm() {
 let formdata = document.getElementById("dataform");
 for (let elem of formdata.getElementsByTagName("input")) {
     elem.onkeydown = function(e) {
-        if (e.key == "Enter") {
+        if (e.key === "Enter") {
             e.preventDefault();
         }
     }
