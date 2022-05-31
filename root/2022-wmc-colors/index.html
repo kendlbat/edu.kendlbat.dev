@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farbmischer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="sliderwrapper">
+        <div class="slider-wrapper">
+            <div class="indicator-wrapper">
+                <div class="indicator" id="red-indicator"></div>
+            </div>
+            <input class="colorinput" type="range" name="colors-red" id="colors-red" min="0" max="255" value="0" step="1">
+        </div>
+        <div class="slider-wrapper">
+            <div class="indicator-wrapper">
+                <div class="indicator" id="green-indicator"></div>
+            </div>
+            <input class="colorinput" type="range" name="colors-green" id="colors-green" min="0" max="255" value="0" step="1">
+        </div>
+        <div class="slider-wrapper">
+            <div class="indicator-wrapper">
+                <div class="indicator" id="blue-indicator"></div>
+            </div>
+            <input class="colorinput" type="range" name="colors-blue" id="colors-blue" min="0" max="255" value="0" step="1">
+        </div>
+    </div>
+    <div id="color"></div>
+    <form action="javascript:void(0);" id="inputform">
+        <div>
+            <input id="input-hex" type="text" id="hex" value="#000000">
+        </div>
+        <div>
+            <input id="input-rgb" type="text" id="rgb" value="0,0,0">
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+    <script src="script.js"></script>
+</body>
+
+</html>

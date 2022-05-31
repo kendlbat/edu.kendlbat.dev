@@ -1,0 +1,72 @@
+html {
+    --red: #ff0000;
+    --green: #00ff00;
+    --blue: #0000ff;
+    background-color: rgb(var(--red), var(--green), var(--blue));
+}
+
+.slider-wrapper {
+    vertical-align: middle;
+}
+
+.indicator {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+}
+
+.indicator-wrapper {
+    /*be a square with side length 2em*/
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+}
+
+.colorinput {
+    margin: 0;
+    height: 1rem;
+}
+
+#colors-red {
+    accent-color: #f00;
+}
+
+#colors-green {
+    accent-color: #0f0;
+}
+
+#colors-blue {
+    accent-color: #00f;
+}
+
+#red-indicator {
+    background-color: #f00;
+}
+
+#green-indicator {
+    background-color: #0f0;
+}
+
+#blue-indicator {
+    background-color: #00f;
+}
+
+#color {
+    background-color: rgb(var(--red), var(--green), var(--blue));
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 200px;
+    width: 200px;
+    display: none;
+}
+
+input[type=submit] {
+    background-color: #25f;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-top: 0.2em;
+    font-size: 1.5em;
+    height: 2em;
+    width: 6em;
+}
