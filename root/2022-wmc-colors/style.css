@@ -5,6 +5,16 @@ html {
     background-color: rgb(var(--red), var(--green), var(--blue));
 }
 
+body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: min(400px, 85%);
+    height: 100%;
+    padding: 10px;
+    margin: 0;
+}
+
 .slider-wrapper {
     vertical-align: middle;
 }
@@ -25,6 +35,9 @@ html {
 .colorinput {
     margin: 0;
     height: 1rem;
+    width: 90%;
+    float: right;
+    right: 1px;
 }
 
 #colors-red {
@@ -60,6 +73,10 @@ html {
     display: none;
 }
 
+input[type=text] {
+    width: 100%;
+}
+
 input[type=submit] {
     background-color: #25f;
     border: none;
@@ -69,4 +86,5 @@ input[type=submit] {
     font-size: 1.5em;
     height: 2em;
     width: 6em;
+    border: 1px solid white;
 }
