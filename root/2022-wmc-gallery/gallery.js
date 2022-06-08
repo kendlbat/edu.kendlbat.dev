@@ -133,6 +133,22 @@ async function main() {
 
 
     loadPreviewImages(Object.keys(images));
+
+    let trollface = document.getElementById("preview-image-trollface.jpg");
+
+    if (trollface) {
+        // Create audio element
+        const audio = document.createElement('audio');
+        audio.src = 'assets/trollface.mp3';
+        audio.id = "trollfaceaudio";
+        document.body.appendChild(audio);
+
+        trollface.addEventListener('click', () => {
+            let audio = document.querySelector('#trollfaceaudio');
+            audio.volume = 1;
+            audio.play();
+        });
+    }
 }
 
 let horizScrollInterval = null;
