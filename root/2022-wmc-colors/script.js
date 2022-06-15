@@ -72,6 +72,18 @@ function loadText(e) {
         document.documentElement.style.setProperty("--red", tempRgb.r);
         document.documentElement.style.setProperty("--green", tempRgb.g);
         document.documentElement.style.setProperty("--blue", tempRgb.b);
+    } else if (document.querySelector("#input-color").value != currentHex) {
+        currentHex = document.querySelector("#input-color").value;
+        tempRgb = hexToRgb(currentHex);
+        if (!tempRgb) return;
+        red = tempRgb.r;
+        green = tempRgb.g;
+        blue = tempRgb.b;
+        setSliders(red, green, blue);
+        document.querySelector("#input-rgb").value = tempRgb.r + "," + tempRgb.g + "," + tempRgb.b;
+        document.documentElement.style.setProperty("--red", tempRgb.r);
+        document.documentElement.style.setProperty("--green", tempRgb.g);
+        document.documentElement.style.setProperty("--blue", tempRgb.b);
     } else if (rgb.match(/([0-9]{1,3}\,){2}[0-9]{1,3}/g)) {
         tempRgb = {
             r: rgb.split(",")[0],
@@ -110,6 +122,7 @@ document.documentElement.style.setProperty("--red", red);
 document.documentElement.style.setProperty("--green", green);
 document.documentElement.style.setProperty("--blue", blue);
 document.querySelector("#input-rgb").value = red + "," + green + "," + blue;
+document.querySelector("#input-color").value = rgbToHEX(red, green, blue);
 currentHex = rgbToHEX(red, green, blue);
 
 document.querySelector("#colors-red").addEventListener("input", function(e) {
@@ -140,5 +153,9 @@ document.querySelector("#input-hex").addEventListener("onkeyup", function(e) {
 });
 
 document.querySelector("#input-rgb").addEventListener("onkeyup", function(e) {
+    loadText(true);
+});
+
+document.querySelector("#input-color").addEventListener("change", function(e) {
     loadText(true);
 });
