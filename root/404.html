@@ -36,9 +36,11 @@
         <img id="image" src="/assets/404.jpg" alt="Error 404">
     </div>
     <script>
-        if (document.getElementById("image").naturalWidth == 0) {
-            document.getElementById("image").src = "/root/assets/404.jpg";
-        }
+        setTimeout(() => {
+            if (document.getElementById("image").naturalWidth == 0) {
+                document.getElementById("image").src = "/root/assets/404.jpg";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
