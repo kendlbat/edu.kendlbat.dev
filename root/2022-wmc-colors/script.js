@@ -84,6 +84,7 @@ function loadText(e) {
         document.documentElement.style.setProperty("--red", tempRgb.r);
         document.documentElement.style.setProperty("--green", tempRgb.g);
         document.documentElement.style.setProperty("--blue", tempRgb.b);
+        document.querySelector("#input-hex").value = currentHex;
     } else if (rgb.match(/([0-9]{1,3}\,){2}[0-9]{1,3}/g)) {
         tempRgb = {
             r: rgb.split(",")[0],
